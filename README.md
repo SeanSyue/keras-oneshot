@@ -3,7 +3,7 @@
 [koch et al, Siamese Networks for one-shot learning,](https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf)  (mostly) reimplimented in keras. 
 Trains on the [Omniglot dataset]( https://github.com/brendenlake/omniglot).
 
-Also check out my [blog post](https://sorenbouma.github.io/blog/oneshot) about this paper and one shot learning in general!
+Also check out [blog post](https://sorenbouma.github.io/blog/oneshot)(from origin auther) about this paper and one shot learning in general!
 
 
 
@@ -13,7 +13,7 @@ Also check out my [blog post](https://sorenbouma.github.io/blog/oneshot) about t
 To run, you'll first have to clone this repo and install the dependencies
 
 ```bash
-git clone https://github.com/sorenbouma/keras-oneshot
+git clone https://github.com/SeanSyue/keras-oneshot
 cd keras-oneshot
 sudo pip install -r requirements.txt
 
