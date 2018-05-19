@@ -1,3 +1,4 @@
 images/*
+data/*
+weights/*
 .idea/**/workspace.xml
-*.pickle
