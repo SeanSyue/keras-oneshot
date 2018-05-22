@@ -1,32 +1,28 @@
 import os
 import pickle
-from keras.layers import Input, Conv2D, Lambda, merge, Dense, Flatten, MaxPooling2D
+from keras.layers import Input, Conv2D, Lambda, Dense, Flatten, MaxPooling2D
 from keras.models import Model, Sequential
 from keras.regularizers import l2
 from keras import backend as K
-from keras.optimizers import SGD, Adam
-from keras.losses import binary_crossentropy
-import numpy.random as rng
+from keras.optimizers import  Adam
 from SiameseModel.Loader import SiameseLoader
 
 
 input_shape = (105, 105, 1)
-left_input = Input(input_shape)
-right_input = Input(input_shape)
 # build convnet to use in each siamese 'leg'
 convnet = Sequential()
 convnet.add(Conv2D(64, (10, 10), activation='relu', input_shape=input_shape, kernel_regularizer=l2(2e-4)))
 convnet.add(MaxPooling2D())
-convnet.add(Conv2D(128, (7, 7), activation='relu',
-                   kernel_regularizer=l2(2e-4)))
+convnet.add(Conv2D(128, (7, 7), activation='relu', kernel_regularizer=l2(2e-4)))
 convnet.add(MaxPooling2D())
-convnet.add(Conv2D(128, (4, 4), activation='relu', kernel_regularizer=l2(2e-4), ))
+convnet.add(Conv2D(128, (4, 4), activation='relu', kernel_regularizer=l2(2e-4)))
 convnet.add(MaxPooling2D())
 convnet.add(Conv2D(256, (4, 4), activation='relu', kernel_regularizer=l2(2e-4)))
 convnet.add(Flatten())
-convnet.add(
-    Dense(4096, activation="sigmoid", kernel_regularizer=l2(1e-3)))
+convnet.add(Dense(4096, activation="sigmoid", kernel_regularizer=l2(1e-3)))
 
+left_input = Input(input_shape)
+right_input = Input(input_shape)
 # call the convnet Sequential model on each of the input tensors so params will be shared
 encoded_l = convnet(left_input)
 encoded_r = convnet(right_input)
@@ -37,7 +33,6 @@ L1_distance = L1_layer([encoded_l, encoded_r])
 prediction = Dense(1, activation='sigmoid')(L1_distance)
 siamese_net = Model(inputs=[left_input, right_input], outputs=prediction)
 
-# TODO: get layerwise learning rates and momentum annealing scheme described in paperworking
 siamese_net.compile(loss="binary_crossentropy", optimizer=Adam(0.00006))
 
 siamese_net.load_weights('weights/siamese_weights_98000.h5')
