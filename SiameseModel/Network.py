@@ -7,10 +7,12 @@ import numpy.random as rng
 
 
 class SiameseNet:
+    """
+    Set up siamese network for training. Able to train from scratch or train from saved weights
+    Use method 'setup' to return the network.
+    """
 
     def __init__(self, weight_path=None):
-
-        self.siamese_net = None
 
         if weight_path is None:
             def W_init(shape, name=None):
@@ -55,12 +57,14 @@ class SiameseNet:
         # call this layer on list of two input tensors.
         L1_distance = L1_layer([encoded_l, encoded_r])
         prediction = Dense(1, activation='sigmoid', bias_initializer=b_init)(L1_distance)
-        self.siamese_net = Model(inputs=[left_input, right_input], outputs=prediction)
+        self._siamese_net = Model(inputs=[left_input, right_input], outputs=prediction)
 
-        self.siamese_net.compile(loss="binary_crossentropy", optimizer=Adam(0.00006))
+        self._siamese_net.compile(loss="binary_crossentropy", optimizer=Adam(0.00006))
 
+        # Load weights from weights file if we assign one
         if weight_path is not None:
-            self.siamese_net.load_weights('weights/siamese_weights_98000.h5')
+            self._siamese_net.load_weights('weights/siamese_weights_98000.h5')
 
     def setup(self):
-        return self.siamese_net
+        """:return well-established network object"""
+        return self._siamese_net

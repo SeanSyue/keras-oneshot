@@ -4,10 +4,10 @@ from SiameseModel.Loader import SiameseLoader
 from SiameseModel.Network import SiameseNet
 
 BATCH_SIZE = 32
-EVAL_EVERY = 50  # interval for evaluating on one-shot tasks
 ITER = 100000
-N_WAY = 20  # how many classes for testing one-shot tasks>
-N_VAL = 250  # how mahy one-shot tasks to validate on?
+N_WAY = 20  # how many classes for testing one-shot tasks
+N_VAL = 250  # how many one-shot tasks to validate on
+EVAL_EVERY = 50  # interval for evaluating on one-shot tasks
 SAVE_EVERY = 2000
 
 PICKLE_PATH = os.path.join('data')
@@ -15,7 +15,7 @@ TRAIN_FILE = os.path.join(PICKLE_PATH, 'train.pickle')
 VAL_FILE = os.path.join(PICKLE_PATH, 'val.pickle')
 
 EXPORT_WEIGHTS_PATH = 'weights'
-IMPORT_WEIGHTS = 'weights/siamese_weights_98000.h5'
+IMPORT_WEIGHTS = 'weights/siamese_weights_98000.h5'  # Remain 'None' if train from scratch
 
 
 def main():
