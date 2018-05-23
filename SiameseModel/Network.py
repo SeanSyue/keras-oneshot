@@ -12,7 +12,7 @@ class SiameseNet:
 
         self.siamese_net = None
 
-        if weight_path is not None:
+        if weight_path is None:
             def W_init(shape, name=None):
                 """Initialize weights as in paper"""
                 values = rng.normal(loc=0, scale=1e-2, size=shape)
